@@ -55,9 +55,15 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                 try {
                     String resp=response.getString("message");
                     if(resp.equals("autenticacion exitosa")){
-                        Intent in=new Intent(login.this,MainActivity.class);
-                        utilidades.token=response.getString("token");
-                        startActivity(in);
+                        if(response.getBoolean("admin")){
+                            Intent in=new Intent(login.this,adminActivity.class);
+                            utilidades.token=response.getString("token");
+                            startActivity(in);
+                        }else{
+                            Intent in=new Intent(login.this,MainActivity.class);
+                            utilidades.token=response.getString("token");
+                            startActivity(in);
+                        }
                     }else if(resp.equals("el password es incorrecto")){
                         Toast.makeText(getApplicationContext(),resp,Toast.LENGTH_LONG).show();
                     }else{
